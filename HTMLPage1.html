@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardar en Google Sheets</title>
+    <script>
+        function agregarProducto(producto) {
+            const url = "https://script.google.com/macros/s/AKfycbxD2mDzGRnhLUHvtxoNDWRGchPH0yqapbmtpjFssHaktHcuDGyq5eydmw0zZLWp1N-Z/exec"; 
+            fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ producto: producto })
+            })
+            .then(response => response.json())
+            .then(data => alert(data.mensaje))
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</head>
+<body>
+    <h2>Selecciona un producto</h2>
+    <button onclick="agregarProducto('Coca-Cola')">
+        🥤 Coca-Cola
+    </button>
+    <button onclick="agregarProducto('Pepsi')">
+        🥤 Pepsi
+    </button>
+</body>
+</html>
