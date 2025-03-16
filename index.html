@@ -8,7 +8,10 @@
         function cargarProductos() {
             const url = 'https://script.google.com/macros/s/AKfycbxD2mDzGRnhLUHvtxoNDWRGchPH0yqapbmtpjFssHaktHcuDGyq5eydmw0zZLWp1N-Z/exec'; // Esta URL es la de la aplicación web desplegada
 
-            fetch(url)
+            fetch(url, {
+                method: "GET",
+                mode: "no-cors"  // No requiere CORS
+            })
                 .then(response => response.json())
                 .then(data => {
                     const contenedor = document.getElementById('productos');
@@ -29,7 +32,8 @@
             fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ producto: producto })
+                body: JSON.stringify({ producto: producto }),
+                mode: "no-cors"
             })
             .then(response => response.json())
             .then(data => alert(data.mensaje))
