@@ -1,12 +1,42 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guardar en Google Sheets</title>
+    <title>Lista de Productos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .product-card {
+            width: 150px;
+            margin: 10px;
+            text-align: center;
+        }
+        .product-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .product-card button {
+            margin-top: 5px;
+            padding: 5px 10px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
     <script>
         function agregarProducto(producto) {
-            const url = "https://script.google.com/macros/s/AKfycbxD2mDzGRnhLUHvtxoNDWRGchPH0yqapbmtpjFssHaktHcuDGyq5eydmw0zZLWp1N-Z/exec"; 
+            const url = "https://script.google.com/macros/s/AKfycbxD2mDzGRnhLUHvtxoNDWRGchPH0yqapbmtpjFssHaktHcuDGyq5eydmw0zZLWp1N-Z/exec";
             fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -16,15 +46,35 @@
             .then(data => alert(data.mensaje))
             .catch(error => console.error("Error:", error));
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const productos = [
+                { nombre: "Hielo 5kg", img: "hielo.jpg" },
+                { nombre: "Peñafiel 600ml", img: "penafiel.jpg" },
+                { nombre: "Coca 1.35L", img: "coca135.jpg" },
+                { nombre: "Mundet 2L", img: "mundet.jpg" },
+                { nombre: "Squirt 1.75L", img: "squirt.jpg" },
+                { nombre: "Sprite 2L y 3L", img: "sprite.jpg" },
+                { nombre: "Ginger Ale", img: "gingerale.jpg" }
+            ];
+
+            const container = document.getElementById("product-container");
+            
+            productos.forEach(producto => {
+                const div = document.createElement("div");
+                div.classList.add("product-card");
+                div.innerHTML = `
+                    <img src="img/${producto.img}" alt="${producto.nombre}">
+                    <p>${producto.nombre}</p>
+                    <button onclick="agregarProducto('${producto.nombre}')">Agregar</button>
+                `;
+                container.appendChild(div);
+            });
+        });
     </script>
 </head>
 <body>
-    <h2>Selecciona un producto</h2>
-    <button onclick="agregarProducto('Coca-Cola')">
-        🥤 Coca-Cola
-    </button>
-    <button onclick="agregarProducto('Pepsi')">
-        🥤 Pepsi
-    </button>
+    <h1>Selecciona un producto</h1>
+    <div class="container" id="product-container"></div>
 </body>
 </html>
