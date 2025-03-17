@@ -13,7 +13,7 @@
         const API_URL = "https://script.google.com/macros/s/AKfycbxD2mDzGRnhLUHvtxoNDWRGchPH0yqapbmtpjFssHaktHcuDGyq5eydmw0zZLWp1N-Z/exec";
 
         function cargarProductos() {
-            fetch(API_URL)
+            fetch(API_URL, { method: "GET", mode: "cors" })
                 .then(response => response.json())
                 .then(data => {
                     const contenedor = document.getElementById('productos');
