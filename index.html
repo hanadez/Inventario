@@ -34,8 +34,9 @@
             method: "GET",
             dataType: "jsonp",
             jsonp: "callback",
-            error: function(error) {
-                console.error("Error al cargar los productos:", error);
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error("Error al cargar los productos:", textStatus, errorThrown);
+                console.log("Detalles completos del error:", jqXHR);
             }
         });
         
