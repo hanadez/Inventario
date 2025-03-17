@@ -33,6 +33,7 @@
             url: API_URL,
             method: "GET",
             dataType: "jsonp",
+            mode: "no-cors",
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error("Error al cargar los productos:", textStatus, errorThrown);
                 console.log("Detalles completos del error:", jqXHR);
