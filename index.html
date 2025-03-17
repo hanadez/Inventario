@@ -13,7 +13,18 @@
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbxD2mDzGRnhLUHvtxoNDWRGchPH0yqapbmtpjFssHaktHcuDGyq5eydmw0zZLWp1N-Z/exec?callback=cargarProductos";
 
-        function cargarProductos() {
+        jQuery.ajax({
+            crossDomain: true,
+            url: API_URL,
+            method: "GET",
+            dataType: "jsonp"
+            });
+
+          function cargarProductos(e) {
+          console.log(e);
+          }
+        
+        function loadProductos() {
             $.ajax({
                 crossDomain: true,
                 url: API_URL,
