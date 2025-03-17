@@ -8,12 +8,7 @@
         function cargarProductos() {
             const url = 'https://script.google.com/macros/s/AKfycbxD2mDzGRnhLUHvtxoNDWRGchPH0yqapbmtpjFssHaktHcuDGyq5eydmw0zZLWp1N-Z/exec'; // Esta URL es la de la aplicación web desplegada
 
-            fetch(url, {
-                redirect: "follow",
-                headers: {
-                    "Content-Type": "text/plain;charset=utf-8",
-                  },
-            })
+            fetch(url)
                 .then(response => response.json())
                 .then(data => {
                     const contenedor = document.getElementById('productos');
