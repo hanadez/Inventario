@@ -4,41 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventario</title>
-    <script>
-        function cargarProductos() {
-            const url = 'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbxD2mDzGRnhLUHvtxoNDWRGchPH0yqapbmtpjFssHaktHcuDGyq5eydmw0zZLWp1N-Z/exec'; // Esta URL es la de la aplicación web desplegada
+</head>
+<body onload="cargarProductos()">
+    <h2>Selecciona un producto</h2>
+    <div id="productos"></div>
 
-            fetch(url)
+    <script>
+        const API_URL = "https://script.google.com/macros/s/TU_ID_DEL_SCRIPT/exec"; // Reemplaza con tu URL
+
+        function cargarProductos() {
+            fetch(API_URL)
                 .then(response => response.json())
                 .then(data => {
                     const contenedor = document.getElementById('productos');
                     data.forEach(producto => {
                         const boton = document.createElement('button');
                         boton.innerHTML = `<img src="${producto.imagen}" alt="${producto.nombre}" width="50" /> ${producto.nombre}`;
-                        boton.onclick = function () {
-                            agregarProducto(producto.nombre);
-                        };
+                        boton.onclick = () => agregarProducto(producto.nombre);
                         contenedor.appendChild(boton);
                     });
                 })
-                .catch(error => console.error('Error al cargar los productos:', error));
+                .catch(error => console.error("Error al cargar los productos:", error));
         }
 
         function agregarProducto(producto) {
-            const url = "https://script.google.com/macros/s/AKfycbxD2mDzGRnhLUHvtxoNDWRGchPH0yqapbmtpjFssHaktHcuDGyq5eydmw0zZLWp1N-Z/exec"; 
-            fetch(url, {
+            fetch(API_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ producto: producto }),
+                body: JSON.stringify({ producto })
             })
             .then(response => response.json())
             .then(data => alert(data.mensaje))
             .catch(error => console.error("Error:", error));
         }
     </script>
-</head>
-<body onload="cargarProductos()">
-    <h2>Selecciona un producto</h2>
-    <div id="productos"></div>
 </body>
 </html>
