@@ -4,38 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventario</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body onload="cargarProductos()">
     <h2>Selecciona un producto</h2>
     <div id="productos"></div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbxD2mDzGRnhLUHvtxoNDWRGchPH0yqapbmtpjFssHaktHcuDGyq5eydmw0zZLWp1N-Z/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbxD2mDzGRnhLUHvtxoNDWRGchPH0yqapbmtpjFssHaktHcuDGyq5eydmw0zZLWp1N-Z/exec?callback=loadData";
 
         function cargarProductos() {
-            fetch(API_URL, { redirect: "follow", method: "GET", headers: {"Content-Type": "text/plain;charset=utf-8"} })
-                .then(response => response.json())
-                .then(data => {
-                    const contenedor = document.getElementById('productos');
+            $.ajax({
+                crossDomain: true,
+                url: API_URL,
+                method: "GET",
+                dataType: "jsonp", // Usa JSONP
+                jsonp: "callback", // Define el parámetro de callback
+                success: function(data) {
+                    const contenedor = $("#productos");
                     data.forEach(producto => {
-                        const boton = document.createElement('button');
-                        boton.innerHTML = `<img src="${producto.imagen}" alt="${producto.nombre}" width="50" /> ${producto.nombre}`;
-                        boton.onclick = () => agregarProducto(producto.nombre);
-                        contenedor.appendChild(boton);
+                        const boton = $("<button>")
+                            .html(`<img src="${producto.imagen}" alt="${producto.nombre}" width="50" /> ${producto.nombre}`)
+                            .click(() => agregarProducto(producto.nombre));
+                        contenedor.append(boton);
                     });
-                })
-                .catch(error => console.error("Error al cargar los productos:", error));
+                },
+                error: function(error) {
+                    console.error("Error al cargar los productos:", error);
+                }
+            });
         }
 
         function agregarProducto(producto) {
-            fetch(API_URL, {
+            $.ajax({
+                crossDomain: true,
+                url: API_URL,
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ producto })
-            })
-            .then(response => response.json())
-            .then(data => alert(data.mensaje))
-            .catch(error => console.error("Error:", error));
+                contentType: "application/json",
+                data: JSON.stringify({ producto }),
+                success: function(response) {
+                    alert(response.mensaje);
+                },
+                error: function(error) {
+                    console.error("Error:", error);
+                }
+            });
         }
     </script>
 </body>
