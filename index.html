@@ -6,23 +6,38 @@
     <title>Inventario</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<body onload="cargarProductos()">
+<body>
     <h2>Selecciona un producto</h2>
     <div id="productos"></div>
 
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbxD2mDzGRnhLUHvtxoNDWRGchPH0yqapbmtpjFssHaktHcuDGyq5eydmw0zZLWp1N-Z/exec?callback=cargarProductos";
 
+        function cargarProductos(data) {
+            console.log("Datos recibidos:", data);
+
+            const contenedor = document.getElementById("productos");
+            contenedor.innerHTML = ""; // Limpia el contenedor antes de agregar productos
+
+            data.forEach(producto => {
+                const boton = document.createElement("button");
+                boton.innerHTML = `<img src="${producto.imagen}" alt="${producto.nombre}" width="50"> ${producto.nombre}`;
+                boton.onclick = () => alert(`Seleccionaste: ${producto.nombre}`);
+                contenedor.appendChild(boton);
+            });
+        }
+
+        // Llamar a la API
         jQuery.ajax({
             crossDomain: true,
             url: API_URL,
             method: "GET",
-            dataType: "jsonp"
-            });
-
-          function cargarProductos(e) {
-          console.log(e);
-          }
+            dataType: "jsonp",
+            jsonp: "callback",
+            error: function(error) {
+                console.error("Error al cargar los productos:", error);
+            }
+        });
         
         function loadProductos() {
             $.ajax({
