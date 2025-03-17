@@ -33,7 +33,6 @@
             url: API_URL,
             method: "GET",
             dataType: "jsonp",
-            jsonp: "callback",
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error("Error al cargar los productos:", textStatus, errorThrown);
                 console.log("Detalles completos del error:", jqXHR);
