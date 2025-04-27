@@ -12,7 +12,7 @@
     <div id="productos"></div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbwfod6ALkCCWRAk7NMDJwenEN0qtOuvoezU9QFVn2BgoMWa8LhltXg5zCBkQt_tVW8t/exec?callback=cargarProductos";
+        const API_URL = "https://script.google.com/macros/s/AKfycbyn24FlaR7z3H5t0HPf7A807jJP0a9Jq4hrulhB_g19S44hlFd5RDJ1of-1o_11uSs2/exec?callback=cargarProductos";
 
         function cargarProductos(data) {
             console.log("Datos recibidos:", data);
@@ -63,50 +63,72 @@
             });
         }
 
-    function agregarProducto(producto) {
-        let cantidad = ${producto.cantidad}; // inicializa en 1
-    
-        // Crea el contenido de la alerta
-        const alerta = $(`
-            <div style="text-align: center;">
-                <img src="${producto.imagen}" alt="${producto.nombre}" width="100" style="margin-bottom: 10px;" />
-                <h3>${producto.nombre}</h3>
-                <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin: 10px 0;">
-                    <button id="restarCantidad" style="font-size: 20px;">-</button>
-                    <span id="cantidad">${cantidad}</span>
-                    <button id="sumarCantidad" style="font-size: 20px;">+</button>
+        function agregarProducto(producto) {
+            let cantidad = ${producto.cantidad} || 0;
+        
+            // Crea el contenido de la alerta
+            const alerta = $(`
+                <div style="text-align: center;">
+                    <img src="${producto.imagen}" alt="${producto.nombre}" width="100" style="margin-bottom: 10px;" />
+                    <h3>${producto.nombre}</h3>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin: 10px 0;">
+                        <button id="restarCantidad" style="font-size: 20px;">-</button>
+                        <span id="cantidad">${cantidad}</span>
+                        <button id="sumarCantidad" style="font-size: 20px;">+</button>
+                    </div>
                 </div>
-            </div>
-        `);
-    
-        // Muestra la alerta
-        Swal.fire({
-            title: 'Agregar producto',
-            html: alerta,
-            showConfirmButton: true,
-            confirmButtonText: 'Aceptar',
-            showCancelButton: true,
-            cancelButtonText: 'Cancelar',
-            didOpen: () => {
-                // Cuando se abra el modal, activar eventos de los botones
-                $('#sumarCantidad').click(() => {
-                    cantidad++;
-                    $('#cantidad').text(cantidad);
-                });
-                $('#restarCantidad').click(() => {
-                    if (cantidad > 1) { // Evitar que baje de 1
-                        cantidad--;
+            `);
+        
+            // Muestra la alerta
+            Swal.fire({
+                title: 'Agregar producto',
+                html: alerta,
+                showConfirmButton: true,
+                confirmButtonText: 'Aceptar',
+                showCancelButton: true,
+                cancelButtonText: 'Cancelar',
+                didOpen: () => {
+                    // Cuando se abra el modal, activar eventos de los botones
+                    $('#sumarCantidad').click(() => {
+                        cantidad++;
                         $('#cantidad').text(cantidad);
-                    }
-                });
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                console.log(`Producto: ${producto.nombre}, Cantidad: ${cantidad}`);
-                // Aquí puedes hacer lo que quieras, como agregar al carrito, etc.
-            }
-        });
-    }
+                    });
+                    $('#restarCantidad').click(() => {
+                        if (cantidad > 0) {
+                            cantidad--;
+                            $('#cantidad').text(cantidad);
+                        }
+                    });
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log(`Producto: ${producto.nombre}, Cantidad: ${cantidad}`);
+                    enviarActualizacion(producto.nombre, cantidad);
+                }
+            });
+        }
+    
+        function enviarActualizacion(nombreProducto, cantidad) {
+            const API_URL = "https://script.google.com/macros/s/AKfycbwfod6ALkCCWRAk7NMDJwenEN0qtOuvoezU9QFVn2BgoMWa8LhltXg5zCBkQt_tVW8t/exec";
+        
+            $.ajax({
+                url: API_URL,
+                method: "POST",
+                contentType: "application/x-www-form-urlencoded",
+                data: {
+                    producto: nombreProducto,
+                    cantidad: cantidad
+                },
+                success: function(response) {
+                    console.log("Producto actualizado correctamente:", response);
+                    Swal.fire('Éxito', 'Producto actualizado en la hoja.', 'success');
+                },
+                error: function(error) {
+                    console.error("Error al actualizar el producto:", error);
+                    Swal.fire('Error', 'No se pudo actualizar el producto.', 'error');
+                }
+            });
+        }
     </script>
 </body>
 </html>
