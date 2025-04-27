@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventario</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <h2>Selecciona un producto</h2>
     <div id="productos"></div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbxJImJF_i0I7Y40LdRuvA90nzcCKhcaWeNMOXFXTsaZd_8IDkkqbv67hVfytv93aOgc/exec?callback=cargarProductos";
+        const API_URL = "https://script.google.com/macros/s/AKfycbwfod6ALkCCWRAk7NMDJwenEN0qtOuvoezU9QFVn2BgoMWa8LhltXg5zCBkQt_tVW8t/exec?callback=cargarProductos";
 
         function cargarProductos(data) {
             console.log("Datos recibidos:", data);
@@ -52,7 +53,7 @@
                     data.forEach(producto => {
                         const boton = $("<button>")
                             .html(`<img src="${producto.imagen}" alt="${producto.nombre}" width="50" /> ${producto.nombre}`)
-                            .click(() => agregarProducto(producto.nombre));
+                            .click(() => agregarProducto(producto));
                         contenedor.append(boton);
                     });
                 },
@@ -62,21 +63,50 @@
             });
         }
 
-        function agregarProducto(producto) {
-            $.ajax({
-                crossDomain: true,
-                url: API_URL,
-                method: "POST",
-                contentType: "application/json",
-                data: JSON.stringify({ producto }),
-                success: function(response) {
-                    alert(response.mensaje);
-                },
-                error: function(error) {
-                    console.error("Error:", error);
-                }
-            });
-        }
+    function agregarProducto(producto) {
+        let cantidad = 1; // inicializa en 1
+    
+        // Crea el contenido de la alerta
+        const alerta = $(`
+            <div style="text-align: center;">
+                <img src="${producto.imagen}" alt="${producto.nombre}" width="100" style="margin-bottom: 10px;" />
+                <h3>${producto.nombre}</h3>
+                <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin: 10px 0;">
+                    <button id="restarCantidad" style="font-size: 20px;">-</button>
+                    <span id="cantidad">${cantidad}</span>
+                    <button id="sumarCantidad" style="font-size: 20px;">+</button>
+                </div>
+            </div>
+        `);
+    
+        // Muestra la alerta
+        Swal.fire({
+            title: 'Agregar producto',
+            html: alerta,
+            showConfirmButton: true,
+            confirmButtonText: 'Aceptar',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            didOpen: () => {
+                // Cuando se abra el modal, activar eventos de los botones
+                $('#sumarCantidad').click(() => {
+                    cantidad++;
+                    $('#cantidad').text(cantidad);
+                });
+                $('#restarCantidad').click(() => {
+                    if (cantidad > 1) { // Evitar que baje de 1
+                        cantidad--;
+                        $('#cantidad').text(cantidad);
+                    }
+                });
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(`Producto: ${producto.nombre}, Cantidad: ${cantidad}`);
+                // Aquí puedes hacer lo que quieras, como agregar al carrito, etc.
+            }
+        });
+    }
     </script>
 </body>
 </html>
