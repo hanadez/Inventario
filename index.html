@@ -22,7 +22,7 @@
 
             data.forEach(producto => {
                 const boton = document.createElement("button");
-                boton.innerHTML = `<img src="${producto.imagen}" alt="img/${producto.nombre}" width="50"> ${producto.nombre}`;
+                boton.innerHTML = `<img src="img/${producto.imagen}" alt="${producto.nombre}" width="50"> ${producto.nombre}`;
                 boton.onclick = () => agregarProducto(producto);
                 contenedor.appendChild(boton);
             });
