@@ -12,7 +12,7 @@
     <div id="productos"></div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbyn24FlaR7z3H5t0HPf7A807jJP0a9Jq4hrulhB_g19S44hlFd5RDJ1of-1o_11uSs2/exec?callback=cargarProductos";
+        const API_URL = "https://script.google.com/macros/s/AKfycbxiRKLFVqkFntQ2GK8ToAIyoMpWal7II0WMq7aHTF5sFgoglXxmhpSAv3JlKcVfzkNq/exec?callback=cargarProductos";
 
         function cargarProductos(data) {
             console.log("Datos recibidos:", data);
@@ -23,7 +23,7 @@
             data.forEach(producto => {
                 const boton = document.createElement("button");
                 boton.innerHTML = `<img src="${producto.imagen}" alt="${producto.nombre}" width="50"> ${producto.nombre}`;
-                boton.onclick = () => alert(`Seleccionaste: ${producto.nombre}`);
+                boton.onclick = () => agregarProducto(producto);
                 contenedor.appendChild(boton);
             });
         }
