@@ -55,7 +55,7 @@
                     const contenedor = $("#productos");
                     data.forEach(producto => {
                         const boton = $("<button>")
-                            .html(`<img src="${producto.imagen}" alt="${producto.nombre}" width="50" /> ${producto.nombre}`)
+                            .html(`<img src="img/${producto.imagen}" alt="${producto.nombre}" width="50" /> ${producto.nombre}`)
                             .click(() => agregarProducto(producto));
                         contenedor.append(boton);
                     });
