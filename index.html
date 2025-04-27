@@ -113,6 +113,7 @@
     
         function enviarActualizacion(nombreProducto, cantidad) {
             $.ajax({
+                crossDomain: true,
                 url: API_URL,
                 method: "GET",
                 contentType: "application/x-www-form-urlencoded",
@@ -121,6 +122,7 @@
                     cantidad: cantidad,
                     action: "actualizar",
                 },
+                mode: "no-cors",
                 success: function(response) {
                     console.log("Producto actualizado correctamente:", response);
                     Swal.fire('Éxito', 'Producto actualizado en la hoja.', 'success');
