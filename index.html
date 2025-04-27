@@ -12,7 +12,7 @@
     <div id="productos"></div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbyc14TgBvsxPHROMehGTlsi8j461L2YEe5elquSkagVrBSnk1ShVOySmx-YOtK3Ic2Q/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbzTcgxwM7m1ZMw2Uj6QNGMx3EK4P2U_SacJswvgyztqpTTpbOhwST_g7OyxKN_r0Q/exec";
 
         function cargarProductos(data) {
             console.log("Datos recibidos:", data);
@@ -122,8 +122,9 @@
                     cantidad: cantidad,
                     action: "actualizar",
                 },
-                success: function(response) {
-                    console.log("Producto actualizado correctamente:", response);
+                success: function(data) {
+                    document.get.elementById("cantidad").value = data.cantidad;
+                    console.log("Producto actualizado correctamente:", data);
                     Swal.fire('Éxito', 'Producto actualizado en la hoja.', 'success');
                 },
                 error: function(error) {
