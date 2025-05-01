@@ -6,11 +6,36 @@
     <title>Inventario</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* Estilo del spinner */
+        .spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #loader {
+            text-align: center;
+            font-size: 16px;
+            margin: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div id="loader" style="text-align: center; font-size: 18px; margin: 20px;">
-        Cargando productos...
+    <div id="loader">
+        <div class="spinner"></div>
+        <p>Cargando productos...</p>
     </div>
+    
     <h2>Selecciona un producto</h2>
     <div id="productos"></div>
 
@@ -65,7 +90,7 @@
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error("Error al cargar los productos:", textStatus, errorThrown);
-                    document.getElementById("loader").innerText = "Error al cargar los productos.";
+                    document.getElementById("loader").innerHTML = "<p>Error al cargar los productos.</p>";
                 }
             });
         }
@@ -140,13 +165,13 @@
 
         function cargarProductos(data) {
             console.log("Datos recibidos:", data);
-        
+
             // Oculta el loader
             document.getElementById("loader").style.display = "none";
-        
+
             const contenedor = document.getElementById("productos");
-            contenedor.innerHTML = ""; // Limpia el contenedor antes de agregar productos
-        
+            contenedor.innerHTML = "";
+
             data.forEach(producto => {
                 const boton = document.createElement("button");
                 boton.innerHTML = `<img src="img/${producto.imagen}" alt="${producto.nombre}" width="50"> ${producto.nombre}`;
