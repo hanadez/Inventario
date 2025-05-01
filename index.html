@@ -96,21 +96,7 @@
     <div id="productos"></div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbzypT_bp0PFjsMdWTPcwghmg_joPLSFd7by--1phyFxnULHTW8WB3_E5AtVY9L7Daba/exec";
-
-        function cargarProductos(data) {
-            console.log("Datos recibidos:", data);
-
-            const contenedor = document.getElementById("productos");
-            contenedor.innerHTML = ""; // Limpia el contenedor antes de agregar productos
-
-            data.forEach(producto => {
-                const boton = document.createElement("button");
-                boton.innerHTML = `<img src="img/${producto.imagen}" alt="${producto.nombre}" width="50"> ${producto.nombre}`;
-                boton.onclick = () => agregarProducto(producto);
-                contenedor.appendChild(boton);
-            });
-        }
+        const API_URL = "https://script.google.com/macros/s/AKfycbwWSy-BK8wYBe2B_VGtiWrVhWWWJPt6E321I4cDhmBBY8j5Oe09GcuQ293d03zlVV8/exec";
 
         // Llamar a la API
         jQuery.ajax({
@@ -189,19 +175,19 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     console.log(`Producto: ${producto.nombre}, Cantidad: ${cantidad}`);
-                    enviarActualizacion(producto.nombre, cantidad);
+                    enviarActualizacion(producto.id, cantidad);
                 }
             });
         }
     
-        function enviarActualizacion(nombreProducto, cantidad) {
+        function enviarActualizacion(idProducto, cantidad) {
             $.ajax({
                 crossDomain: true,
                 url: API_URL,
                 method: "GET",
                 contentType: "application/x-www-form-urlencoded",
                 data: {
-                    producto: nombreProducto,
+                    producto: idProducto,
                     cantidad: cantidad,
                     action: "actualizar",
                 },
