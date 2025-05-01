@@ -8,6 +8,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+    <div id="loader" style="text-align: center; font-size: 18px; margin: 20px;">
+        Cargando productos...
+    </div>
     <h2>Selecciona un producto</h2>
     <div id="productos"></div>
 
@@ -60,8 +63,9 @@
                         contenedor.append(boton);
                     });
                 },
-                error: function(error) {
-                    console.error("Error al cargar los productos:", error);
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error("Error al cargar los productos:", textStatus, errorThrown);
+                    document.getElementById("loader").innerText = "Error al cargar los productos.";
                 }
             });
         }
@@ -131,6 +135,23 @@
                     console.error("Error al actualizar el producto:", error);
                     Swal.fire('Error', 'No se pudo actualizar el producto.', 'error');
                 }
+            });
+        }
+
+        function cargarProductos(data) {
+            console.log("Datos recibidos:", data);
+        
+            // Oculta el loader
+            document.getElementById("loader").style.display = "none";
+        
+            const contenedor = document.getElementById("productos");
+            contenedor.innerHTML = ""; // Limpia el contenedor antes de agregar productos
+        
+            data.forEach(producto => {
+                const boton = document.createElement("button");
+                boton.innerHTML = `<img src="img/${producto.imagen}" alt="${producto.nombre}" width="50"> ${producto.nombre}`;
+                boton.onclick = () => agregarProducto(producto);
+                contenedor.appendChild(boton);
             });
         }
     </script>
