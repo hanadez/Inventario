@@ -180,8 +180,8 @@
         function cargarProductos(data) {
             console.log("Datos recibidos:", data);
 
-            // Oculta el loader
-            document.getElementById("loader").style.display = "none";
+            // Oculta el overlay
+            document.getElementById("loading-overlay").style.display = "none";
 
             const contenedor = document.getElementById("productos");
             contenedor.innerHTML = "";
