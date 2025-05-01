@@ -235,6 +235,44 @@
                 contenedor.appendChild(card);
             });
         }
+
+        $("#btnIniciarCorte").click(function() {
+            $.ajax({
+                url: API_URL,
+                method: "GET",
+                dataType: "jsonp",
+                data: {
+                    action: "iniciarCorte"
+                },
+                success: function(data) {
+                    console.log("Corte iniciado:", data);
+                    Swal.fire('Corte iniciado', data.message || 'Se ha iniciado un nuevo corte.', 'success');
+                },
+                error: function(error) {
+                    console.error("Error al iniciar corte:", error);
+                    Swal.fire('Error', 'No se pudo iniciar el corte.', 'error');
+                }
+            });
+        });
+        
+        $("#btnTerminarCorte").click(function() {
+            $.ajax({
+                url: API_URL,
+                method: "GET",
+                dataType: "jsonp",
+                data: {
+                    action: "terminarCorte"
+                },
+                success: function(data) {
+                    console.log("Corte terminado:", data);
+                    Swal.fire('Corte terminado', data.message || 'Se ha finalizado el corte.', 'success');
+                },
+                error: function(error) {
+                    console.error("Error al terminar corte:", error);
+                    Swal.fire('Error', 'No se pudo terminar el corte.', 'error');
+                }
+            });
+        });
     </script>
 </body>
 </html>
