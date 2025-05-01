@@ -92,11 +92,16 @@
         <div class="spinner"></div>
         <p>Cargando productos...</p>
     </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <button id="btnIniciarCorte">Iniciar Corte</button>
+        <button id="btnTerminarCorte">Terminar Corte</button>
+    </div>
     
     <div id="productos"></div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbxnh1cIUA89A6UyF33eqiJ7EJ8Fd2GLZN1Ulx21Wv5mBFhVvkGMC6o8ZWV7jy87NasI/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbxNtsFTTSClWU_v_euK9-n_-ZgKdL91ccFo12Cg3geLMmKn9893azPybW_gEtWhbw7D/exec";
 
         // Llamar a la API
         jQuery.ajax({
