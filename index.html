@@ -93,9 +93,7 @@
         <p>Cargando productos...</p>
     </div>
     
-    <div id="productos">
-        <h2>Selecciona un producto</h2>
-    </div>
+    <div id="productos"></div>
 
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbxI6TXoZDAvxM9GfSkhsdNsXl_6unMgynjCoplk6wgFwWccDj-ADdbDvEvpvVNyGjRe/exec";
@@ -184,10 +182,8 @@
                         $('#cantidad').text(cantidad);
                     });
                     $('#restarCantidad').click(() => {
-                        if (cantidad > 0) {
-                            cantidad--;
-                            $('#cantidad').text(cantidad);
-                        }
+                        cantidad--;
+                        $('#cantidad').text(cantidad);
                     });
                 }
             }).then((result) => {
