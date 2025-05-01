@@ -9,13 +9,12 @@
     <style>
         /* Estilo del spinner */
         .spinner {
-            border: 6px solid #f3f3f3;
-            border-top: 6px solid #3498db;
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 60px;
+            height: 60px;
             animation: spin 1s linear infinite;
-            margin: 0 auto;
         }
 
         @keyframes spin {
@@ -23,10 +22,25 @@
             100% { transform: rotate(360deg); }
         }
 
-        #loader {
-            text-align: center;
-            font-size: 16px;
-            margin: 20px;
+        /* Overlay que cubre toda la pantalla */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #loading-overlay p {
+            margin-top: 15px;
+            font-size: 18px;
+            color: #555;
         }
     </style>
 </head>
