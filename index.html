@@ -101,7 +101,7 @@
     <div id="productos"></div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbw4ak3F5gna2fT17XKhBUkwIjN5Oy0VVhXg_0RC0qcts5t9vLrJ-0PT7ZFR8kvLLgHj/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycby1DqqiRlNHZntoLv2HtgjHTQexWUhBnU9semCcoB354C3NcCEjfXC70v8ZOJ3pSV7W/exec";
 
         // Llamar a la API
         jQuery.ajax({
@@ -242,7 +242,6 @@
                     action: "iniciarCorte"
                 },
                 success: function(data) {
-                  console.log("Corte iniciado:", data);
                   Swal.fire('Corte iniciado', data.message || 'Se ha iniciado un nuevo corte.', 'success');
                 
                   if (data.datos && data.datos.length > 0) {
@@ -250,13 +249,11 @@
                     let ticketHTML = '<div id="ticket" style="font-family: monospace; padding: 10px;">';
                     ticketHTML += '<h3>Corte de productos</h3>';
                     ticketHTML += '<table style="width:100%; border-collapse: collapse;">';
-                    ticketHTML += '<tr><th>ID</th><th>Producto</th><th>Cantidad</th><th>Precio</th></tr>';
+                    ticketHTML += '<tr><th>Producto</th><th>Cantidad</th></tr>';
                 
                     data.datos.forEach(fila => {
                       ticketHTML += `<tr>
-                        <td>${fila[0]}</td>
                         <td>${fila[1]}</td>
-                        <td>${fila[2]}</td>
                         <td>${fila[3]}</td>
                       </tr>`;
                     });
