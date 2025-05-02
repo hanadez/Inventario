@@ -92,6 +92,11 @@
         <div class="spinner"></div>
         <p>Cargando productos...</p>
     </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <button id="btnIniciarCorte">Iniciar Corte</button>
+        <button id="btnTerminarCorte">Terminar Corte</button>
+    </div>
     
     <div id="productos"></div>
 
@@ -183,10 +188,7 @@
             document.getElementById("loading-overlay").style.display = "none";
         
             const contenedor = document.getElementById("productos");
-            contenedor.innerHTML = `<div style="text-align: center; margin-top: 20px;">
-                                        <button id="btnIniciarCorte">Iniciar Corte</button>
-                                        <button id="btnTerminarCorte">Terminar Corte</button>
-                                    </div>`;
+            contenedor.innerHTML = "";
         
             data.forEach(producto => {
                 const card = document.createElement("div");
