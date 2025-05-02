@@ -92,16 +92,11 @@
         <div class="spinner"></div>
         <p>Cargando productos...</p>
     </div>
-
-    <div style="text-align: center; margin-top: 20px;">
-        <button id="btnIniciarCorte">Iniciar Corte</button>
-        <button id="btnTerminarCorte">Terminar Corte</button>
-    </div>
     
     <div id="productos"></div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbyClSL82a7oGxUN7SHLZVZqGFtrsOVKSvSCB5mJQtJJMi3lx-tmECc8kpoTqINN27wV/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycby4okhGLnsgil9mFVTDOYTEmLZISlFUB-6C3UhLFiAAW8FiQz4AuJjCiQex-FQK-GIW/exec";
 
         // Llamar a la API
         jQuery.ajax({
@@ -188,7 +183,10 @@
             document.getElementById("loading-overlay").style.display = "none";
         
             const contenedor = document.getElementById("productos");
-            contenedor.innerHTML = "";
+            contenedor.innerHTML = `<div style="text-align: center; margin-top: 20px;">
+                                        <button id="btnIniciarCorte">Iniciar Corte</button>
+                                        <button id="btnTerminarCorte">Terminar Corte</button>
+                                    </div>`;
         
             data.forEach(producto => {
                 const card = document.createElement("div");
