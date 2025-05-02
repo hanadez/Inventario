@@ -101,7 +101,7 @@
     <div id="productos"></div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycby1DqqiRlNHZntoLv2HtgjHTQexWUhBnU9semCcoB354C3NcCEjfXC70v8ZOJ3pSV7W/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbw6TBju1QjHLtAqJCBizUeQeehrFXcGM0XVwgwz5qMTpNILAbQR4UvBgYmcuDOMkQUs/exec";
 
         // Llamar a la API
         jQuery.ajax({
@@ -117,29 +117,6 @@
                 console.error("Error al cargar los productos:", textStatus, errorThrown);
             }
         });
-        
-        function loadProductos() {
-            $.ajax({
-                crossDomain: true,
-                url: API_URL,
-                method: "GET",
-                dataType: "jsonp", // Usa JSONP
-                jsonp: "callback", // Define el parámetro de callback
-                success: function(data) {
-                    const contenedor = $("#productos");
-                    data.forEach(producto => {
-                        const boton = $("<button>")
-                            .html(`<img src="img/${producto.imagen}" alt="${producto.nombre}" width="50" /> ${producto.nombre}`)
-                            .click(() => agregarProducto(producto));
-                        contenedor.append(boton);
-                    });
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error("Error al cargar los productos:", textStatus, errorThrown);
-                    document.getElementById("loader").innerHTML = "<p>Error al cargar los productos.</p>";
-                }
-            });
-        }
 
         function agregarProducto(producto) {
             let cantidad = 1;
