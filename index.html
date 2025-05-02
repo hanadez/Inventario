@@ -101,7 +101,7 @@
     <div id="productos"></div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbwwkGvTWKT_WSzTVtLg8OgZexqoqlYPbgPC4VksP2Jtz-TsJLBOn7xHj6yvo13Lc5Re/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbyuSxM04leTVKR4FA07-LLWg0UNYGRxUOpDOqQcAPlecwWtETsTTJQoPZRFYBu6b5Cr/exec";
 
         // Llamar a la API
         jQuery.ajax({
@@ -253,23 +253,44 @@
             });
         });
         
-        $("#btnTerminarCorte").click(function() {
-            $.ajax({
-                url: API_URL,
-                method: "GET",
-                dataType: "jsonp",
-                data: {
-                    action: "terminarCorte"
-                },
-                success: function(data) {
-                    console.log("Corte terminado:", data);
-                    Swal.fire('Corte terminado', data.message || 'Se ha finalizado el corte.', 'success');
-                },
-                error: function(error) {
-                    console.error("Error al terminar corte:", error);
-                    Swal.fire('Error', 'No se pudo terminar el corte.', 'error');
-                }
-            });
+        $("#btnTerminarCorte").click(function () {
+          let corteId = prompt("Introduce el ID del corte (nombre de hoja):");
+          if (!corteId) return;
+        
+          $.ajax({
+            url: API_URL,
+            method: "GET",
+            dataType: "jsonp",
+            data: {
+              action: "terminarCorte",
+              id: corteId
+            },
+            success: function (data) {
+              Swal.fire('Corte terminado', data.message, 'success');
+        
+              // Imprimir ticket si hay ventas
+              if (data.ventas && data.ventas.length > 0) {
+                let ticketHTML = '<div style="font-family: monospace;">';
+                ticketHTML += '<h3>Resumen de ventas</h3>';
+                ticketHTML += '<table><tr><th>Producto</th><th>Cantidad</th><th>Precio</th><th>Total</th></tr>';
+                data.ventas.forEach(v => {
+                  ticketHTML += `<tr><td>${v[0]}</td><td>${v[1]}</td><td>${v[2]}</td><td>${v[3]}</td></tr>`;
+                });
+                ticketHTML += `<tr><td colspan="3"><strong>Total:</strong></td><td><strong>${data.total}</strong></td></tr>`;
+                ticketHTML += '</table></div>';
+        
+                let printWindow = window.open('', '_blank');
+                printWindow.document.write(`<html><body>${ticketHTML}</body></html>`);
+                printWindow.document.close();
+                printWindow.focus();
+                printWindow.print();
+                printWindow.close();
+              }
+            },
+            error: function () {
+              Swal.fire('Error', 'No se pudo terminar el corte.', 'error');
+            }
+          });
         });
     </script>
 </body>
