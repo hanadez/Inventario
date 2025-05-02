@@ -101,7 +101,7 @@
     <div id="productos"></div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbyw1UwgPptQK8TaSPyredtjm0Jzd_1F9zIxK0e4hRDYyRUmMuyotyqbmXXlfQbqG7T0/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbwcS4dV-x2gVoT6V3U1BPXrUEvvxu9hgzW1WyiUfnqE41mOH0ezK01QkZ5XoxUjkBG5/exec";
 
         // Llamar a la API
         jQuery.ajax({
@@ -272,9 +272,10 @@
               if (data.ventas && data.ventas.length > 0) {
                 let ticketHTML = '<div style="font-family: monospace;">';
                 ticketHTML += '<h3>Resumen de ventas</h3>';
-                ticketHTML += '<table><tr><th>Producto</th><th>Cantidad</th><th>Precio</th><th>Total</th></tr>';
+                ticketHTML += '<h3>Total: ${data.total}</h3>';
+                ticketHTML += '<table><tr><th>Producto</th><th>Cantidad al Inicio</th><th>Cantidad al Termino</th><th>Venta</th><th>Precio</th><th>Total</th></tr>';
                 data.ventas.forEach(v => {
-                  ticketHTML += `<tr><td>${v[0]}</td><td>${v[1]}</td><td>${v[2]}</td><td>${v[3]}</td></tr>`;
+                  ticketHTML += `<tr><td>${v[1]}</td><td>${v[3]}</td><td>${v[4]}</td><td>${v[5]}</td><td>${v[2]}</td><td>${v[6]}</td></tr>`;
                 });
                 ticketHTML += `<tr><td colspan="3"><strong>Total:</strong></td><td><strong>${data.total}</strong></td></tr>`;
                 ticketHTML += '</table></div>';
