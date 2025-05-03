@@ -261,7 +261,7 @@
                     data.datos.forEach(fila => {
                       ticketHTML += `<tr>
                         <td>${fila[1]}</td>
-                        <td>${fila[3]}</td>
+                        <td>${fila[3] || 0}</td>
                       </tr>`;
                     });
                 
