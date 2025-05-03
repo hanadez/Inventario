@@ -211,50 +211,46 @@
         }
 
         $("#btnIniciarCorte").click(function() {
-  $.ajax({
-    url: API_URL,
-    method: "GET",
-    dataType: "jsonp",
-    data: {
-      action: "iniciarCorte"
-    },
-    success: function(data) {
-      Swal.fire('Corte iniciado', data.message || 'Se ha iniciado un nuevo corte.', 'success');
-
-      if (data.datos && data.datos.length > 0) {
-        let ticketText = 'CORTE DE PRODUCTOS\n\n';
-        ticketText += 'Producto           Inicio\n';
-        ticketText += '-----------------------------\n';
-
-        data.datos.forEach(fila => {
-          ticketText += `${fila[1].padEnd(18)}${fila[3]}\n`;
+            $.ajax({
+                url: API_URL,
+                method: "GET",
+                dataType: "jsonp",
+                data: {
+                    action: "iniciarCorte"
+                },
+                success: function(data) {
+                  Swal.fire('Corte iniciado', data.message || 'Se ha iniciado un nuevo corte.', 'success');
+                
+                  if (data.datos && data.datos.length > 0) {
+                    // Crear HTML del ticket
+                    let ticketHTML = '<div id="ticket" style="font-family: monospace; padding: 10px;">';
+                    ticketHTML += '<h3>Corte de productos</h3>';
+                    ticketHTML += '<table style="width:100%; border-collapse: collapse;">';
+                    ticketHTML += '<tr><th>Producto</th><th>Inicio</th></tr>';
+                
+                    data.datos.forEach(fila => {
+                      ticketHTML += `<tr>
+                        <td>${fila[1]}</td>
+                        <td>${fila[3]}</td>
+                      </tr>`;
+                    });
+                
+                    ticketHTML += '</table></div>';
+                
+                    // Abrir en nueva ventana y lanzar impresión
+                    let printWindow = window.open('', '_blank');
+                    printWindow.document.write(`<html><head><title>Ticket</title></head><body>${ticketHTML}</body></html>`);
+                    printWindow.document.close();
+                    printWindow.focus();
+                    printWindow.print();
+                  }
+                },
+                error: function(error) {
+                    console.error("Error al iniciar corte:", error);
+                    Swal.fire('Error', 'No se pudo iniciar el corte.', 'error');
+                }
+            });
         });
-
-        ticketText += '\n-----------------------------\n';
-        ticketText += 'Gracias por su trabajo\n';
-
-        // Crear una nueva ventana y redirigir desde allí
-let rawbtWindow = window.open('', '_blank');
-rawbtWindow.document.write(`
-  <html>
-    <body>
-      <script>
-        const text = ${JSON.stringify(ticketText)};
-        const url = 'data:text/plain;charset=utf-8,' + encodeURIComponent(text);
-        window.location.href = 'rawbt:' + url;
-      <\/script>
-    </body>
-  </html>
-`);
-rawbtWindow.document.close();
-      }
-    },
-    error: function(error) {
-      console.error("Error al iniciar corte:", error);
-      Swal.fire('Error', 'No se pudo iniciar el corte.', 'error');
-    }
-  });
-});
         
         $("#btnTerminarCorte").click(function () {
           let corteId = prompt("Introduce el ID del corte (nombre de hoja):");
