@@ -117,7 +117,7 @@
     <div id="productos"></div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbxfaAxOVQOb86md1Uxco42VQlrNkbSthrtzVOas7ZczAjqbhJOMMgGEnkdElBsMe_Rj/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbxt7aH2ei8RDbq62an_gJ5PbdmyygeaMkJucTHVrAlJIjgLbKp4OrBcVdmVqz03y0Uk/exec";
 
         // Llamar a la API
         jQuery.ajax({
@@ -254,9 +254,9 @@
                   if (data.datos && data.datos.length > 0) {
                     // Crear HTML del ticket
                     let ticketHTML = '<div id="ticket" style="font-family: monospace; padding: 10px;">';
-                    ticketHTML += '<h3>Corte de productos</h3>';
+                    ticketHTML += '<h3>Corte de productos ID:${data.id}</h3>';
                     ticketHTML += '<table style="width:100%; border-collapse: collapse;">';
-                    ticketHTML += '<tr><th aling="left">Producto</th><th aling="left">Inicio</th></tr>';
+                    ticketHTML += '<tr><th align="left">Producto</th><th align="left">Inicio</th></tr>';
                 
                     data.datos.forEach(fila => {
                       ticketHTML += `<tr>
