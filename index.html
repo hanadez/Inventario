@@ -106,13 +106,13 @@
         // Llamar a la API
         jQuery.ajax({
             crossDomain: true,
-            url: API_URL + "?callback=cargarProductos",
+            url: API_URL,
             method: "GET",
             dataType: "jsonp",
-            mode: "no-cors",
             data: {
                 action: "listar" // Acción para listar productos
             },
+            success: cargarProductos(data),
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error("Error al cargar los productos:", textStatus, errorThrown);
             }
