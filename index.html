@@ -101,7 +101,7 @@
     <div id="productos"></div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbwcS4dV-x2gVoT6V3U1BPXrUEvvxu9hgzW1WyiUfnqE41mOH0ezK01QkZ5XoxUjkBG5/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbyIQLIWlmeNm59_Vzrmh9X3Q3TR6z08faD618qqOhxZJeDnOt4e9LOjti_DYOXrQzHu/exec";
 
         // Llamar a la API
         jQuery.ajax({
@@ -159,30 +159,7 @@
                     enviarActualizacion(producto.id, cantidad);
                 }
             });
-        }
-    
-        function enviarActualizacion(idProducto, cantidad) {
-            $.ajax({
-                crossDomain: true,
-                url: API_URL,
-                method: "GET",
-                contentType: "application/x-www-form-urlencoded",
-                data: {
-                    producto: idProducto,
-                    cantidad: cantidad,
-                    action: "actualizar",
-                },
-                success: function(data) {
-                    document.get.elementById("cantidad").value = data.cantidad;
-                    console.log("Producto actualizado correctamente:", data);
-                    Swal.fire('Éxito', 'Producto actualizado en la hoja.', 'success');
-                },
-                error: function(error) {
-                    console.error("Error al actualizar el producto:", error);
-                    Swal.fire('Error', 'No se pudo actualizar el producto.', 'error');
-                }
-            });
-        }
+        } 
 
         function cargarProductos(data) {
             document.getElementById("loading-overlay").style.display = "none";
@@ -207,6 +184,28 @@
                 card.appendChild(cantidad);
         
                 contenedor.appendChild(card);
+            });
+        }
+
+        function enviarActualizacion(idProducto, cantidad) {
+            $.ajax({
+                url: API_URL,
+                method: "GET",
+                contentType: "jsonp",
+                data: {
+                    producto: idProducto,
+                    cantidad: cantidad,
+                    action: "actualizar",
+                },
+                success: function(data) {
+                    document.get.elementById("cantidad").value = data.cantidad;
+                    console.log("Producto actualizado correctamente:", data);
+                    Swal.fire('Éxito', 'Producto actualizado en la hoja.', 'success');
+                },
+                error: function(error) {
+                    console.error("Error al actualizar el producto:", error);
+                    Swal.fire('Error', 'No se pudo actualizar el producto.', 'error');
+                }
             });
         }
 
