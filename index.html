@@ -211,39 +211,39 @@
         }
 
         $("#btnIniciarCorte").click(function() {
-            $.ajax({
-                url: API_URL,
-                method: "GET",
-                dataType: "jsonp",
-                data: {
-                    action: "iniciarCorte"
-                },
-                success: function(data) {
-                  Swal.fire('Corte iniciado', data.message || 'Se ha iniciado un nuevo corte.', 'success');
-                
-                  if (data.datos && data.datos.length > 0) {
-                    // Crear HTML del ticket
-                    let ticketText = 'CORTE DE PRODUCTOS\n\n';
-                    ticketText += 'Producto        Inicio\n';
-ticketText += '------------------------\n';
+  $.ajax({
+    url: API_URL,
+    method: "GET",
+    dataType: "jsonp",
+    data: {
+      action: "iniciarCorte"
+    },
+    success: function(data) {
+      Swal.fire('Corte iniciado', data.message || 'Se ha iniciado un nuevo corte.', 'success');
 
-data.datos.forEach(fila => {
-  ticketText += `${fila[1]}       ${fila[3]}\n`;
-});
+      if (data.datos && data.datos.length > 0) {
+        let ticketText = 'CORTE DE PRODUCTOS\n\n';
+        ticketText += 'Producto           Inicio\n';
+        ticketText += '-----------------------------\n';
 
-ticketText += '\nGracias por su trabajo\n';
-
-                    // Enviar a RawBT
-                    const ticketURL = 'data:text/plain;charset=utf-8,' + encodeURIComponent(ticketText);
-                    window.location.href = `rawbt:${ticketURL}`;
-                  }
-                },
-                error: function(error) {
-                    console.error("Error al iniciar corte:", error);
-                    Swal.fire('Error', 'No se pudo iniciar el corte.', 'error');
-                }
-            });
+        data.datos.forEach(fila => {
+          ticketText += `${fila[1].padEnd(18)}${fila[3]}\n`;
         });
+
+        ticketText += '\n-----------------------------\n';
+        ticketText += 'Gracias por su trabajo\n';
+
+        // ENVIAR A RAWBT
+        const ticketURL = 'data:text/plain;charset=utf-8,' + encodeURIComponent(ticketText);
+        window.location.href = `rawbt:${ticketURL}`;
+      }
+    },
+    error: function(error) {
+      console.error("Error al iniciar corte:", error);
+      Swal.fire('Error', 'No se pudo iniciar el corte.', 'error');
+    }
+  });
+});
         
         $("#btnTerminarCorte").click(function () {
           let corteId = prompt("Introduce el ID del corte (nombre de hoja):");
