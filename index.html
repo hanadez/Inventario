@@ -112,7 +112,9 @@
             data: {
                 action: "listar" // Acción para listar productos
             },
-            success: cargarProductos(data),
+            success: function(data) {
+                cargarProductos(data); // Llama la función con los datos recibidos
+            },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error("Error al cargar los productos:", textStatus, errorThrown);
             }
