@@ -223,21 +223,18 @@
                 
                   if (data.datos && data.datos.length > 0) {
                     // Crear HTML del ticket
-                    let ticketHTML = '<div id="ticket" style="font-family: monospace; padding: 10px;">';
-                    ticketHTML += '<h3>Corte de productos</h3>';
-                    ticketHTML += '<table style="width:100%; border-collapse: collapse;">';
-                    ticketHTML += '<tr><th>Producto</th><th>Inicio</th></tr>';
-                
-                    data.datos.forEach(fila => {
-                      ticketHTML += `<tr>
-                        <td>${fila[1]}</td>
-                        <td>${fila[3]}</td>
-                      </tr>`;
-                    });
-                
-                    ticketHTML += '</table></div>';
+                    let ticketText = 'CORTE DE PRODUCTOS\n\n';
+                    ticketText += 'Producto        Inicio\n';
+ticketText += '------------------------\n';
 
-                    const ticketURL = 'data:text/html;charset=utf-8,' + encodeURIComponent(ticketHTML);
+data.datos.forEach(fila => {
+  ticketText += `${fila[1]}       ${fila[3]}\n`;
+});
+
+ticketText += '\nGracias por su trabajo\n';
+
+                    // Enviar a RawBT
+                    const ticketURL = 'data:text/plain;charset=utf-8,' + encodeURIComponent(ticketText);
                     window.location.href = `rawbt:${ticketURL}`;
                   }
                 },
