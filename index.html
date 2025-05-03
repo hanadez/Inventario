@@ -85,6 +85,22 @@
             padding: 4px 8px;
             border-radius: 12px;
         }
+
+        .btn-moderno {
+            background: #3498db;
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin: 0 10px;
+        }
+        
+        .btn-moderno:hover {
+            background: #2980b9;
+        }
     </style>
 </head>
 <body>
@@ -93,9 +109,9 @@
         <p>Cargando productos...</p>
     </div>
 
-    <div style="text-align: center; margin-top: 20px;">
-        <button id="btnIniciarCorte">Iniciar Corte</button>
-        <button id="btnTerminarCorte">Terminar Corte</button>
+    <div id="botones-corte" style="text-align: center; margin-top: 20px; display: none;">
+        <button id="btnIniciarCorte" class="btn-moderno">Iniciar Corte</button>
+        <button id="btnTerminarCorte" class="btn-moderno">Terminar Corte</button>
     </div>
     
     <div id="productos"></div>
@@ -187,6 +203,8 @@
         
                 contenedor.appendChild(card);
             });
+
+            document.getElementById("botones-corte").style.display = "block";
         }
 
         function enviarActualizacion(idProducto, cantidad) {
@@ -211,7 +229,17 @@
             });
         }
 
+        function mostrarCargando(mensaje = "Procesando...") {
+            $('#loading-overlay p').text(mensaje);
+            $('#loading-overlay').show();
+        }
+        
+        function ocultarCargando() {
+            $('#loading-overlay').hide();
+        }
+
         $("#btnIniciarCorte").click(function() {
+            mostrarCargando("Iniciando corte...");
             $.ajax({
                 url: API_URL,
                 method: "GET",
@@ -220,6 +248,7 @@
                     action: "iniciarCorte"
                 },
                 success: function(data) {
+                    ocultarCargando();
                   Swal.fire('Corte iniciado', data.message || 'Se ha iniciado un nuevo corte.', 'success');
                 
                   if (data.datos && data.datos.length > 0) {
@@ -247,6 +276,7 @@
                   }
                 },
                 error: function(error) {
+                    ocultarCargando();
                     console.error("Error al iniciar corte:", error);
                     Swal.fire('Error', 'No se pudo iniciar el corte.', 'error');
                 }
@@ -256,7 +286,9 @@
         $("#btnTerminarCorte").click(function () {
           let corteId = prompt("Introduce el ID del corte (nombre de hoja):");
           if (!corteId) return;
-        
+          
+          mostrarCargando("Terminando corte...");
+            
           $.ajax({
             url: API_URL,
             method: "GET",
@@ -266,6 +298,7 @@
               id: corteId
             },
             success: function (data) {
+              ocultarCargando();
               Swal.fire('Corte terminado', data.message, 'success');
         
               // Imprimir ticket si hay ventas
@@ -289,6 +322,7 @@
               }
             },
             error: function () {
+              ocultarCargando();
               Swal.fire('Error', 'No se pudo terminar el corte.', 'error');
             }
           });
