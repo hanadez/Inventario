@@ -303,13 +303,14 @@
               Swal.fire('Corte terminado', data.message, 'success');
         
               // Imprimir ticket si hay ventas
-              if (data.ventas && data.ventas.length > 0) {
                 let ticketHTML = '<div style="font-family: monospace;">';
                 ticketHTML += '<h3>Resumen de ventas</h3>';
                 ticketHTML += `<h3>Total: ${data.total}</h3>`;
                 ticketHTML += '<table><tr><th>Producto</th><th>Inicio</th><th>Termino</th><th>Venta</th><th>Precio</th><th>Total</th></tr>';
                 data.ventas.forEach(v => {
-                  ticketHTML += `<tr><td>${v[1]}</td><td>${v[3]}</td><td>${v[4]}</td><td>${v[5]}</td><td>${v[2]}</td><td>${v[6]}</td></tr>`;
+                    if (v[5] != 0) {
+                      ticketHTML += `<tr><td>${v[1]}</td><td>${v[3]}</td><td>${v[4]}</td><td>${v[5]}</td><td>${v[2]}</td><td>${v[6]}</td></tr>`;
+                    }
                 });
                 ticketHTML += `<tr><td colspan="3"><strong>Total:</strong></td><td><strong>${data.total}</strong></td></tr>`;
                 ticketHTML += '</table></div>';
@@ -319,7 +320,6 @@
                 printWindow.document.close();
                 printWindow.focus();
                 printWindow.print();
-              }
             },
             error: function () {
               ocultarCargando();
