@@ -357,8 +357,6 @@
                 <div style="text-align: center;">
                     <img src="img/${producto.imagen}" alt="${producto.nombre}" width="100" style="margin-bottom: 10px;" />
                     <h3>${producto.nombre}</h3>
-                    <p>${producto.descripcion}</p>
-                    <p>Precio: $${producto.precio}</p>
                     <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin: 10px 0;">
                         <button id="restarCantidad" style="font-size: 20px;">-</button>
                         <span id="cantidad">${cantidad}</span>
@@ -368,7 +366,7 @@
             `);
         
             Swal.fire({
-                title: `Cantidad: ${cantidad}`,
+                title: `Cantidad: ${producto.cantidad}`,
                 html: alerta,
                 showConfirmButton: true,
                 confirmButtonText: 'Aceptar',
