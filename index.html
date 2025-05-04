@@ -366,7 +366,7 @@
             `);
         
             Swal.fire({
-                title: `Cantidad: ${producto.cantidad}`,
+                title: `Cantidad: ${producto.cantidad || 0}`,
                 html: alerta,
                 showConfirmButton: true,
                 confirmButtonText: 'Aceptar',
