@@ -155,7 +155,7 @@
         
             // Muestra la alerta
             Swal.fire({
-                title: 'Producto',
+                title: `Producto <div class="producto-cantidad">${producto.cantidad || 0}</div>`,
                 html: alerta,
                 showConfirmButton: true,
                 confirmButtonText: 'Aceptar',
