@@ -220,7 +220,6 @@
                 },
                 success: function(data) {
                     document.getElementById(data.id).innerText = data.cantidad;
-                    document.getElementById("cantidad").innerText = data.cantidad;
                     console.log("Producto actualizado correctamente:", data);
                     Swal.fire('Éxito', 'Producto actualizado en la hoja.', 'success');
                 },
@@ -340,6 +339,7 @@
                     id: producto.id
                 },
                 success: function(detalle) {
+                    console.log(detalle);
                     mostrarAlertaProducto(detalle);
                 },
                 error: function(err) {
