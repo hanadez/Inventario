@@ -208,12 +208,12 @@
         }
 
         function enviarActualizacion(idProducto, cantidad) {
-            console.log(idProducto);
-            console.log(cantidad);
+            console.log("idProducto: " + idProducto);
+            console.log("cantidad: " + cantidad);
             $.ajax({
                 url: API_URL,
                 method: "GET",
-                contentType: "jsonp",
+                dataType: "jsonp",
                 data: {
                     producto: idProducto,
                     cantidad: cantidad,
