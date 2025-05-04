@@ -146,7 +146,7 @@
                     <h3>${producto.nombre}</h3>
                     <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin: 10px 0;">
                         <button id="restarCantidad" style="font-size: 20px;">-</button>
-                        <span id="cantidad">${cantidad}</span>
+                        <span id="cantidad-${producto-id}">${cantidad}</span>
                         <button id="sumarCantidad" style="font-size: 20px;">+</button>
                     </div>
                 </div>
@@ -209,8 +209,6 @@
         }
 
         function enviarActualizacion(idProducto, cantidad) {
-            console.log("idProducto: " + idProducto);
-            console.log("cantidad: " + cantidad);
             $.ajax({
                 url: API_URL,
                 method: "GET",
@@ -221,8 +219,8 @@
                     action: "actualizar",
                 },
                 success: function(data) {
-                    console.log(data);
                     document.getElementById(data.id).innerText = data.cantidad;
+                    document.getElementById("cantidad-${data.id}").innerText = data.cantidad;
                     console.log("Producto actualizado correctamente:", data);
                     Swal.fire('Éxito', 'Producto actualizado en la hoja.', 'success');
                 },
