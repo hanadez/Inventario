@@ -142,7 +142,7 @@
             // Crea el contenido de la alerta
             const alerta = $(`
                 <div style="text-align: center;">
-                    <div class="producto-cantidad">${producto.cntidad}</div>
+                    <div class="producto-cantidad">${producto.cantidad || 0}</div>
                     <img src="img/${producto.imagen}" alt="${producto.nombre}" width="100" style="margin-bottom: 10px;" />
                     <h3>${producto.nombre}</h3>
                     <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin: 10px 0;">
