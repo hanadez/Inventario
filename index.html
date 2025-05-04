@@ -142,6 +142,7 @@
             // Crea el contenido de la alerta
             const alerta = $(`
                 <div style="text-align: center;">
+                    <div class="producto-cantidad">${producto.cntidad}</div>
                     <img src="img/${producto.imagen}" alt="${producto.nombre}" width="100" style="margin-bottom: 10px;" />
                     <h3>${producto.nombre}</h3>
                     <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin: 10px 0;">
@@ -154,7 +155,7 @@
         
             // Muestra la alerta
             Swal.fire({
-                title: 'Agregar producto',
+                title: 'Producto',
                 html: alerta,
                 showConfirmButton: true,
                 confirmButtonText: 'Aceptar',
@@ -249,7 +250,7 @@
                 },
                 success: function(data) {
                     ocultarCargando();
-                  Swal.fire('Corte iniciado', data.message || 'Se ha iniciado un nuevo corte.', 'success');
+                  Swal.fire('Corte ID: ' + data.id, data.message || 'Se ha iniciado un nuevo corte.', 'success');
                 
                   if (data.datos && data.datos.length > 0) {
                     // Crear HTML del ticket
