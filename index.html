@@ -136,7 +136,7 @@
             }
         });
 
-        function agregarProducto(producto) {
+        /*function agregarProducto(producto) {
             let cantidad = 1;
         
             // Crea el contenido de la alerta
@@ -177,7 +177,7 @@
                     enviarActualizacion(producto.id, cantidad);
                 }
             });
-        } 
+        }*/
 
         function cargarProductos(data) {
             document.getElementById("loading-overlay").style.display = "none";
@@ -329,6 +329,69 @@
             }
           });
         });
+
+        function agregarProducto(producto) {
+            $.ajax({
+                url: API_URL,
+                method: "GET",
+                dataType: "json",
+                data: {
+                    action: "detalleProducto",
+                    id: producto.id
+                },
+                success: function(detalle) {
+                    mostrarAlertaProducto(detalle);
+                },
+                error: function(err) {
+                    console.error("Error al obtener detalles del producto:", err);
+                    Swal.fire("Error", "No se pudo cargar la información del producto.", "error");
+                }
+            });
+        }
+
+        function mostrarAlertaProducto(producto) {
+            let cantidad = 1;
+        
+            const alerta = $(`
+                <div style="text-align: center;">
+                    <img src="img/${producto.imagen}" alt="${producto.nombre}" width="100" style="margin-bottom: 10px;" />
+                    <h3>${producto.nombre}</h3>
+                    <p>${producto.descripcion}</p>
+                    <p>Precio: $${producto.precio}</p>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin: 10px 0;">
+                        <button id="restarCantidad" style="font-size: 20px;">-</button>
+                        <span id="cantidad">${cantidad}</span>
+                        <button id="sumarCantidad" style="font-size: 20px;">+</button>
+                    </div>
+                </div>
+            `);
+        
+            Swal.fire({
+                title: `Cantidad: ${cantidad}`,
+                html: alerta,
+                showConfirmButton: true,
+                confirmButtonText: 'Aceptar',
+                showCancelButton: true,
+                cancelButtonText: 'Cancelar',
+                didOpen: () => {
+                    $('#sumarCantidad').click(() => {
+                        cantidad++;
+                        $('#cantidad').text(cantidad);
+                    });
+        
+                    $('#restarCantidad').click(() => {
+                        if (cantidad > 1) {
+                            cantidad--;
+                            $('#cantidad').text(cantidad);
+                        }
+                    });
+                }
+            }).then(result => {
+                if (result.isConfirmed) {
+                    enviarActualizacion(producto.id, cantidad);
+                }
+            });
+        }
     </script>
 </body>
 </html>
