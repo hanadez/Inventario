@@ -221,6 +221,7 @@
                     action: "actualizar",
                 },
                 success: function(data) {
+                    console.log(data);
                     document.getElementById(data.id).innerText = data.cantidad;
                     console.log("Producto actualizado correctamente:", data);
                     Swal.fire('Éxito', 'Producto actualizado en la hoja.', 'success');
