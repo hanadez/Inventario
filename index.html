@@ -380,10 +380,8 @@
                     });
         
                     $('#restarCantidad').click(() => {
-                        if (cantidad > 1) {
-                            cantidad--;
-                            $('#cantidad').text(cantidad);
-                        }
+                        cantidad--;
+                        $('#cantidad').text(cantidad);
                     });
                 }
             }).then(result => {
