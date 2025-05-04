@@ -196,6 +196,7 @@
         
                 const cantidad = document.createElement("div");
                 cantidad.className = "producto-cantidad";
+                cantidad.id = producto.id;
                 cantidad.innerText = producto.cantidad || 0;
         
                 card.appendChild(imagen);
@@ -220,7 +221,7 @@
                     action: "actualizar",
                 },
                 success: function(data) {
-                    document.getElementById("cantidad").value = data.cantidad;
+                    document.getElementById(data.id).value = data.cantidad;
                     console.log("Producto actualizado correctamente:", data);
                     Swal.fire('Éxito', 'Producto actualizado en la hoja.', 'success');
                 },
